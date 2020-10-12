@@ -13,6 +13,7 @@ import com.hfdm.cursomc.domain.Cidade;
 import com.hfdm.cursomc.domain.Cliente;
 import com.hfdm.cursomc.domain.Endereco;
 import com.hfdm.cursomc.domain.Estado;
+import com.hfdm.cursomc.domain.ItemPedido;
 import com.hfdm.cursomc.domain.PagamentoComBoleto;
 import com.hfdm.cursomc.domain.PagamentoComCartao;
 import com.hfdm.cursomc.domain.Pedido;
@@ -24,6 +25,7 @@ import com.hfdm.cursomc.repositories.CidadeRepository;
 import com.hfdm.cursomc.repositories.ClienteRepository;
 import com.hfdm.cursomc.repositories.EnderecoRepository;
 import com.hfdm.cursomc.repositories.EstadoRepository;
+import com.hfdm.cursomc.repositories.ItemPedidoRepository;
 import com.hfdm.cursomc.repositories.PagamentoRepository;
 import com.hfdm.cursomc.repositories.PedidoRepository;
 import com.hfdm.cursomc.repositories.ProdutoRepository;
@@ -54,6 +56,9 @@ public class CursomcApplication implements CommandLineRunner {
 
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -166,6 +171,23 @@ public class CursomcApplication implements CommandLineRunner {
 
 		pedidoRepository.saveAll(Arrays.asList(pedido1, pedido2));
 		pagamentoRepository.saveAll(Arrays.asList(pagamento1, pagamento2));
+
+		ItemPedido itemPedido1 = new ItemPedido(pedido1, produto1);
+		itemPedido1.setDesconto(0.00);
+		itemPedido1.setQuantidade(1);
+		itemPedido1.setPreco(2000.00);
+
+		ItemPedido itemPedido2 = new ItemPedido(pedido1, produto3);
+		itemPedido2.setDesconto(0.00);
+		itemPedido2.setQuantidade(2);
+		itemPedido2.setPreco(80.00);
+
+		ItemPedido itemPedido3 = new ItemPedido(pedido2, produto2);
+		itemPedido3.setDesconto(100.00);
+		itemPedido3.setQuantidade(1);
+		itemPedido3.setPreco(800.00);
+
+		itemPedidoRepository.saveAll(Arrays.asList(itemPedido1, itemPedido2, itemPedido3));
 	}
 
 }
